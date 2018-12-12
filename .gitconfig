@@ -42,3 +42,5 @@
     amend = !git log -n 1 --pretty=tformat:%s%n%n%b | git commit -F - --amend
     branch-name = "!git rev-parse --abbrev-ref HEAD"
     publish = "!git push -u origin $(git branch-name)"
+[credential]
+    helper = osxkeychain
