@@ -29,4 +29,16 @@
 [format]
 	pretty = oneline
 [alias]
-	lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    exclude = !sh -c 'echo "$1" >> .git/info/exclude' -
+    alias = !git config --list | grep 'alias\\.' | sed 's/alias\\.\\([^=]*\\)=\\(.*\\)/\\1\t=> \\2/' | sort
+    ignore=!([ ! -e .gitignore ] && touch .gitignore) | echo $1 >>.gitignore
+    lg = log --color --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit
+    cms = commit -S -m
+    cm  = commit -m
+    cma = commit -a -m
+    a = add
+    master = checkout master
+    staging = checkout staging
+    amend = !git log -n 1 --pretty=tformat:%s%n%n%b | git commit -F - --amend
+    branch-name = "!git rev-parse --abbrev-ref HEAD"
+    publish = "!git push -u origin $(git branch-name)"
